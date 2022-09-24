@@ -1,0 +1,26 @@
+@import './../../../../app.component.scss';
+
+input {
+  box-shadow: none !important;
+  border: transparent;
+  font-size: 11pt;
+}
+
+button {
+  width: 150px;
+  height: 50px;
+}
+
+.home-container .card {
+  // background-color: $soft-main;
+  background-color: #fbddd2;
+  color: #8c3213;
+  // background-color: #d7f0db;
+  // color: #226c2c;
+  // background-color: #fae9c5;
+  // color: #8f6e25;
+}
+
+.spinner-container {
+  margin-top: 6em;
+}

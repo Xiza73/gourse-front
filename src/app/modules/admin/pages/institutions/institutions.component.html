@@ -1,0 +1,96 @@
+<h4 class="text-uppercase">Administrar instituciones</h4>
+<mat-divider></mat-divider>
+
+<div class="row">
+  <!-- <div class="col-12 mt-4">
+    <button mat-raised-button color="primary" (click)="newInstitution()">
+      <mat-icon class="me-1">add</mat-icon>
+      <span>Nueva institución</span>
+    </button>
+  </div> -->
+
+  <div class="col-12 mt-4">
+    <mat-form-field class="w-100">
+      <mat-label>Buscar</mat-label>
+      <input matInput (keyup)="filter($event)" placeholder="Escriba una palabra clave" #input>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+  
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-uppercase">Nombre</th>
+          <td mat-cell *matCellDef="let institution">{{ institution.name }}</td>
+        </ng-container>
+  
+        <!-- Columna Nombre -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-uppercase">Descripción</th>
+          <td mat-cell *matCellDef="let institution">{{ institution.description | summarize:25 }}</td>
+        </ng-container>
+  
+        <!-- Columna Email -->
+        <ng-container matColumnDef="url">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-uppercase">URL</th>
+          <td mat-cell *matCellDef="let institution">{{ institution.url }}</td>
+        </ng-container>
+  
+        <!--Columna Rol  -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-uppercase">Email</th>
+          <td mat-cell *matCellDef="let institution">{{ institution.email }}</td>
+        </ng-container> 
+  
+        <!-- Columna Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-uppercase">Estado</th>
+          <td mat-cell *matCellDef="let institution">
+              <span class="badge"
+                    [ngClass]="institution.status === 1 ? 'bg-success' : 'bg-secondary'">
+                {{ institution.status === 1 ? 'activo' : 'inactivo' }}
+              </span>
+          </td>
+        </ng-container>
+  
+        <!-- columna  editar-eliminar  -->
+        <ng-container matColumnDef="menu">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let institution">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="editInstitution(institution)">
+                <mat-icon class="material-icons-two-tone">create</mat-icon>
+                <span>Editar</span>
+              </button>
+              <!-- <button mat-menu-item (click)="deleteInstitution(institution)">
+                <mat-icon class="material-icons-two-tone">delete</mat-icon>
+                <span>Eliminar</span>
+              </button> -->
+            </mat-menu>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row class="bg-primary" *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+        <tr class="mat-row" *matNoDataRow>
+          <td *ngIf="dataSource.data.length !== 0"
+              class="mat-cell" colspan="6">
+            No se encontró ningún dato que coincida con "{{input.value}}"
+          </td>
+          <td *ngIf="dataSource.data.length === 0"
+              class="mat-cell" colspan="6">
+            No se encontraron instituciones registradas
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="mt-2">
+      </mat-paginator>
+    </div>
+
+
+  </div>
+</div>

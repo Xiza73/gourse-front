@@ -1,0 +1,18 @@
+<div [routerLink]="['/instituciones/detalle', institution._id]" class="card mb-4 institution-container"
+  style="width: 230px">
+  <div class="card-img-top d-flex justify-content-center align-items-center">
+    <img [src]="institution.logo ? institution.logo : './assets/images/institution.png'"
+         alt="..."
+         [class.img-default]="!institution.logo">
+  </div>
+  <div class="card-body">
+    <h6 class="card-title mx-auto text-center">
+      <a [routerLink]="['/instituciones/detalle', institution._id]" class="h6 text-black fw-bold">{{ institution.name | summarize:30 }}</a>
+    </h6>
+    <p class="card-text">
+      {{ institution.description === '' ? 'Sin descripción' : institution.description | summarize:100 }}
+    </p>
+    <p class="m-0 p-0 pt-2 fw-bold text-primary text-center">Ver cursos</p>
+
+  </div>
+</div>

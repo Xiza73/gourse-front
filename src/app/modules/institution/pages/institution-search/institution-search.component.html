@@ -1,0 +1,57 @@
+<main class="row pt-4 d-flex justify-content-center mb-5 home-container">
+  <div class="col-10 mb-5 p-0">
+    <p class="fw-bold px-2 pt-3">
+      <fa-icon [icon]="faInstitution"></fa-icon>
+      <span class="px-1"> Nombre de la institución </span>
+    </p>
+    <form [formGroup]="form" (submit)="search()">
+      <div class="form-group d-flex border rounded p-2">
+        <input formControlName="name" 
+               type="text" 
+               class="form-control" 
+               placeholder="Institución o palabra clave" />
+        <button type="submit" class="btn btn-primary search-button">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- Institutions container -->
+  <div class="col-10 p-0">
+    <div *ngIf="institutions.length === 0" class="position-relative spinner-container">
+      <ngx-spinner [fullScreen]="false" color="#e95420" type="ball-beat" size="medium">
+      </ngx-spinner>
+    </div>
+    
+    <div *ngIf="institutions.length > 0" 
+         class="d-flex align-items-center flex-wrap pt-4"
+         [ngClass]="{
+           'justify-content-between': institutionsToShow.length > 3,
+           'gap-5': institutionsToShow.length <= 3
+         }">
+      <div *ngFor="let item of institutions">
+        <app-institution-box [institution]="item"></app-institution-box>
+      </div>
+    </div>
+    
+    <div *ngIf="total === 0" class="d-flex flex-column align-items-center mt-4 text-danger fw-bold">
+      <p>No se encontró la institución.</p>
+    </div>
+
+    <div *ngIf="total > pageSize"
+         class="col-12 d-flex justify-content-center py-5">
+      <button *ngIf="showPreviousPageBtn()"
+              (click)="previousPage()"
+              class="btn btn-outline-primary me-2">
+        <fa-icon [icon]="faChevronLeft" class="me-1"></fa-icon>
+        Página anterior
+      </button>
+      <button *ngIf="showNextPageBtn()"
+              (click)="nextPage()"
+              class="btn btn-outline-primary ms-2">
+        Página siguiente
+        <fa-icon [icon]="faChevronRight" class="ms-1"></fa-icon>
+      </button>
+    </div>
+  </div>
+</main>

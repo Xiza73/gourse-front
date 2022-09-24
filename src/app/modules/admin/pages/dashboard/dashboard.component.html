@@ -1,0 +1,16 @@
+<h4 class="text-uppercase">Bienvenido al panel de administración</h4>
+<mat-divider></mat-divider>
+<div class="row">
+  <div class="info-container alert alert-danger">
+    <span class="fw-bold">{{ numClients }}</span>
+    <p>{{ numClients === 1 ? 'Cliente' : 'Clientes' }}</p>
+  </div>
+  <div class="info-container alert alert-success">
+    <span class="fw-bold">{{ numCourses }}</span>
+    <p>{{ numCourses === 1 ? 'Curso' : 'Cursos' }}</p>
+  </div>
+  <div class="info-container alert alert-info">
+    <span class="fw-bold">{{ numInstitutions }}</span>
+    <p>{{ numInstitutions === 1 ? 'Institución' : 'Instituciones' }}</p>
+  </div>
+</div>

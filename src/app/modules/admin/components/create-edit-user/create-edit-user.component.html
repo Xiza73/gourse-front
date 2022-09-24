@@ -1,0 +1,116 @@
+<form [formGroup]="form" (submit)="save()">
+  <div class="d-flex pb-2 justify-content-between">
+    <h5 class="d-flex justify-content-center align-items-center mb-0">
+      {{ mode === 'create' ? 'Agregar usuario' : 'Editar usuario' }}
+    </h5>
+    <button mat-icon-button mat-dialog-close type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <!--Name-->
+    <mat-form-field appearance="outline" class="col-12">
+      <mat-label>Nombres y apellidos</mat-label>
+      <input matInput #nameInput
+             maxlength="50"
+             placeholder="Patricia" 
+             formControlName="name" 
+             required
+             cdkFocusInitial>
+      <mat-icon matSuffix class="material-icons-two-tone">perm_identity</mat-icon>
+      <mat-hint>{{ nameInput.value?.length || 0 }}/50</mat-hint>
+      <mat-error *ngIf="isPatternValid('name')">Solo letras</mat-error>
+      <mat-error *ngIf="isRequiredField('name')">Nombre y apellidos requeridos</mat-error>
+    </mat-form-field>
+  
+    <!--Username-->
+    <mat-form-field appearance="outline" class="col-12 mt-2">
+      <mat-label>Usuario</mat-label>
+      <input matInput #usernameInput 
+             maxlength="50" 
+             placeholder="patricia21" 
+             formControlName="username" 
+             required>
+      <mat-icon matSuffix class="material-icons-two-tone">account_circle</mat-icon>
+      <mat-hint>{{ usernameInput.value?.length || 0 }}/50</mat-hint>
+      <mat-error *ngIf="isRequiredField('username')">Nombre de usuario requerido</mat-error>
+      <mat-error *ngIf="isPatternValid('username')">Solo letras o números</mat-error>
+    </mat-form-field>
+  
+    <!--Email-->
+    <mat-form-field appearance="outline" class="col-12 mt-2">
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput 
+             placeholder="pat@example.com" 
+             formControlName="email"  
+             required>
+      <mat-icon matSuffix class="material-icons-two-tone">markunread</mat-icon>
+      <mat-error *ngIf="isRequiredField('email')">Correo electrónico requerido</mat-error>
+      <mat-error *ngIf="isValidEmail('email')">No es un correo válido</mat-error>
+    </mat-form-field>
+  
+    <!--Password-->
+    <mat-form-field *ngIf="mode !== 'edit'"
+                    appearance="outline" class="col-12 mt-2">
+      <mat-label>Contraseña</mat-label>
+      <input matInput maxlength="20" #passwordInput
+             minlenght="3" 
+             [type]="hide ? 'password' : 'text'" 
+             formControlName="password" 
+             required>
+      <button mat-icon-button matSuffix
+              (click)="hide = !hide" 
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+        <mat-icon class="material-icons-two-tone">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <!-- <mat-hint>{{ passwordInput.value?.length || 0 }}/20</mat-hint> -->
+      <mat-error *ngIf="isRequiredField('password')">Contraseña requerida</mat-error>
+      <mat-error *ngIf="isMinLengthInvalid('password')">Escriba mínimo 3 caracteres</mat-error>
+    </mat-form-field>
+  
+    <!--New password-->
+    <mat-form-field *ngIf="mode === 'edit'"
+                    appearance="outline" class="col-12 mt-2">
+      <mat-label>Nueva contraseña</mat-label>
+      <input matInput maxlength="20" #newPasswordInput
+             minlenght="3" 
+             [type]="hide ? 'password' : 'text'" 
+             formControlName="newPassword">
+      <button mat-icon-button matSuffix
+              (click)="hide = !hide" 
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+        <mat-icon class="material-icons-two-tone">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <!-- <mat-hint>{{ passwordInput.value?.length || 0 }}/20</mat-hint> -->
+      <mat-error *ngIf="isMinLengthInvalid('newPassword')">Escriba mínimo 3 caracteres</mat-error>
+    </mat-form-field>
+  
+    <!--Role-->
+    <mat-form-field appearance="outline" class="col-6 mt-2">
+      <mat-label>Rol</mat-label>
+      <mat-select formControlName="roleId">
+        <mat-option [value]="role._id" *ngFor="let role of roles">{{ role.description | titlecase }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isRequiredField('roleId')">Rol requerido</mat-error>
+    </mat-form-field>
+  
+    <!--Status-->
+    <mat-form-field appearance="outline" class="col-6 mt-2">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status">
+        <mat-option [value]="1">Activo</mat-option>
+        <mat-option [value]="0">Inactivo</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isRequiredField('status')">Estado requerido</mat-error>
+    </mat-form-field>
+  
+    <div class="col-12 d-flex justify-content-end mt-3">
+      <button mat-raised-button color="basic" mat-dialog-close class="me-3" type="button">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit">Guardar usuario</button>
+    </div>
+  
+  </div>
+</form>
