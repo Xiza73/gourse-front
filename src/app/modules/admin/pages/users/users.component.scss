@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  .mat-header-cell {
+    background: #673ab7;
+    color: white;
+  }
+}
+::ng-deep {
+  .mat-sort-header-sorted, .mat-sort-header-arrow {
+    color: #ffd740; /* change color of header and arrow*/
+  }
+}

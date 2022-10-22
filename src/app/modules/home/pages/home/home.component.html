@@ -1,0 +1,44 @@
+<main class="row pt-4 d-flex justify-content-center mb-5 home-container">
+  <div class="card col-10 mb-3">
+    <div class="card-body mb-5">
+      <h2 class="card-title">Bienvenido a Gourse</h2>
+      <p class="card-text col-10 mt-4">
+        Aquí podrás encontrar múltiples cursos de tecnología, filtrados entre las mejores instituciones del país,
+        realiza tus búsquedas con resultados óptimos y rápidos. Empieza a aprender junto a nosotros.
+      </p>
+    </div>
+  </div>
+  <div class="col-10 mb-5 p-0">
+    <p class="fw-bold px-2 pt-3">
+      <fa-icon [icon]="faBook"></fa-icon>
+      <span class="px-1"> Nombre del curso </span>
+    </p>
+    <form [formGroup]="form" (submit)="findCourse()">
+      <div class="form-group d-flex border rounded p-2">
+        <input formControlName="name" type="text" class="form-control" placeholder="Curso, categoría o palabra clave" />
+        <button type="submit" class="btn btn-primary">
+          Buscar
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- Courses container -->
+  <div class="courses-container col-10 p-0">
+    <div class="card col-12">
+      <div class="card-body">
+        <h5 class="card-title m-0 p-0">Cursos destacados</h5>
+      </div>
+    </div>
+
+    <div *ngIf="courses.length === 0" class="position-relative spinner-container">
+      <ngx-spinner [fullScreen]="false" color="#e95420" type="ball-beat" size="medium">
+      </ngx-spinner>
+    </div>
+
+    <div *ngIf="courses.length > 0" class="d-flex justify-content-between align-items-center flex-wrap pt-4">
+      <div *ngFor="let item of courses">
+        <app-course-box [course]="item"></app-course-box>
+      </div>
+    </div>
+  </div>
+</main>

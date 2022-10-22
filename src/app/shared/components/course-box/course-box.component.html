@@ -1,0 +1,22 @@
+<div [routerLink]="['/cursos/detalle', course._id]"
+     class="card mb-4 course-container" style="width: 230px">
+  <img
+    src="https://vilmanunez.com/wp-content/uploads/2016/03/herramientas-y-recursos-para-crear-curso-online.png"
+    [src]="course.image"
+    class="card-img-top"
+    alt="..."
+  />
+  <div class="card-body">
+    <h6 class="card-title mx-auto text-center">
+      <a [routerLink]="['/cursos/detalle', course._id]" class="h6 text-black fw-bold">{{ course.name | summarize:30 }}</a>
+    </h6>
+    <p class="card-text">
+      {{ course.description === '' ? 'Sin descripción' : course.description | summarize:60 }}
+    </p>
+    <div class="course-data d-flex flex-column justify-content-between align-items-center mt-auto">
+      <p class="m-0 p-0 fw-bold text-primary">{{ course.price | currency }}</p>
+      <!-- <p class="m-0 p-0">{{ course.schedule }}</p> -->
+    </div>
+  </div>
+</div>
+

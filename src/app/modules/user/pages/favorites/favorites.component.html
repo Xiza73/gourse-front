@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center pt-4">
+  <div class="courses-container col-10 p-0 favorites-container">
+    <div class="card col-12">
+      <div class="card-body">
+        <h5 class="card-title m-0 p-0"> Mis Cursos Favoritos </h5>
+      </div>
+    </div>
+
+    <div *ngIf="total > 0"
+         class="d-flex align-items-center flex-wrap pt-4"
+         [ngClass]="{
+           'justify-content-between': favorites.length > 3,
+           'gap-5': favorites.length <= 3
+         }">
+      <div *ngFor="let item of favorites">
+        <app-course-box [course]="item"></app-course-box>
+      </div>
+
+    </div>
+
+    <div *ngIf="total === 0"
+         class="d-flex flex-column align-items-center mt-4">
+      <p>No tiene cursos favoritos agregados.</p>
+      <a [routerLink]="['/cursos/busqueda']" 
+          [queryParams]="{course: '', option: 1}"
+          class="btn btn-primary mt-3">
+        Buscar cursos
+      </a>
+    </div>
+
+    <div *ngIf="total === -1"
+         class="position-relative spinner-container">
+      <ngx-spinner [fullScreen]="false" color="#e95420" type="ball-beat" size="medium">
+      </ngx-spinner>
+    </div>
+
+
+  </div>
+</div>

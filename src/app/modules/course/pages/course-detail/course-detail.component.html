@@ -1,0 +1,60 @@
+<div class="course-container">
+  <div class="row course-data">
+    <div class="col-4">
+      <div class="course-img-container">
+        <img [src]="course.image ? course.image : './assets/images/course.jpg'" 
+             alt=""
+             [class.course-img-default]="!course.image">
+      </div>
+    </div>
+    <div class="col-8">
+      <h1 class="mb-4">{{ course.name }}</h1>
+      <p class="mb-3"><b>Brindado por: </b><a [routerLink]="['/instituciones/detalle', institution._id]">{{ institution.name }}</a></p>
+      <p class="mb-3"><b>Fecha de Inicio: </b>{{ course.start | date }}</p>
+      <p class="mb-3"><b>Duración: </b>{{ (course.duration) ? course.duration : '-' }}</p>
+      <p class="mb-3"><b>Horario: </b>{{ course.schedule }}</p>
+      <p class="mb-3 price"><b>Precio: </b>{{ course.price | currency }}</p>
+      <div class="mt-5">
+        <div class="buy">
+          <fa-icon [icon]="faHeart"
+                   [className]="active ? 'icon active_heart' : 'icon heart'"
+                   (click)="addDeleteFavorite()">
+          </fa-icon>
+          <p (click)="addDeleteFavorite()">Añadir a favoritos</p>
+          
+          <a [href]="course.url"
+             class="btn btn-warning"
+             target="_blank">
+            Comprar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row course-description">
+    <div class="col-12">
+      <h1>Descripción</h1>
+      <p *ngIf="course.description !== ''"
+         class="text-justify">
+         {{ course.description }}
+      </p>
+      <p *ngIf="course.description === ''"
+          class="text-justify text-danger fw-bold">
+          No se encontró una descripción.
+      </p>
+    </div>
+  </div>
+
+  <!-- <div class="row recommended-courses">
+    <div class="col-12">
+      <h1>Otros cursos que te pueden interesar</h1>
+      <div class="d-flex justify-content-between align-items-center flex-wrap pt-4">
+        <div *ngFor="let item of courses">
+          <app-course-box [course]="item">
+          </app-course-box>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

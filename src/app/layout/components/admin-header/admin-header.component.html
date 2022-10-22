@@ -1,0 +1,22 @@
+<mat-toolbar>
+  <mat-toolbar-row class="d-flex justify-content-between">
+    <button type="button" mat-icon-button (click)="toggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-raised-button class="bg-primary text-white" [matMenuTriggerFor]="menu">
+      <span>{{ username }}</span>
+      <mat-icon class="ms-2">sentiment_satisfied_alt</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <!-- <button mat-menu-item>
+        <mat-icon class="material-icons-two-tone">person</mat-icon>
+        <span>Mi perfil</span>
+      </button> -->
+      <button mat-menu-item
+              (click)="logout()">
+        <mat-icon class="material-icons-two-tone">logout</mat-icon>
+        <span>Cerrar sesión</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>

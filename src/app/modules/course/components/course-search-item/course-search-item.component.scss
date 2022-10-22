@@ -1,0 +1,12 @@
+span {
+  font-size: 10pt;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.card:hover {
+  border: 1px rgba(#e95420, .5) solid;
+  background-color: rgba(#e95420, .15);
+}

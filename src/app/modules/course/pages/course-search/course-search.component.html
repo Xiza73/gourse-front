@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-3 d-none d-md-block">
+
+    <form [formGroup]="form" (submit)="search()">
+      <div class="mb-3">
+        <p class="fw-bold pt-3">
+          <fa-icon [icon]="faBook"></fa-icon>
+          <span class="px-1">
+            Nombre del curso
+          </span>
+        </p>
+        <div class="input-group">
+          <input formControlName="searchTerm"
+                 type="text" 
+                 class="form-control"
+                 placeholder="Curso, categoría o palabra clave">
+          <button type="submit"
+                  class="btn btn-primary">
+            <fa-icon [icon]="faSearch"></fa-icon>
+          </button>
+        </div>
+      </div>
+    
+      <div class="mb-3">
+        <p class="fw-bold pt-3">
+          <fa-icon [icon]="faSort"></fa-icon>
+          <span class="px-1">
+            Ordenar por
+          </span>
+        </p>
+        <select formControlName="option"
+                (change)="search()"
+                class="form-select" 
+                aria-label="Default select example">
+          <option value="1">Fecha</option>
+          <option value="2">Menor a Mayor Precio</option>
+          <option value="3">Mayor a Menor Precio</option>
+        </select>
+      </div>
+    </form>
+    
+    <div class="mb-3">
+      <p class="fw-bold pt-3">
+        <fa-icon [icon]="faHistory"></fa-icon>
+        <span class="px-1">
+          Búsquedas recientes
+        </span>
+      </p>
+      <ul class="list-group">
+        <li *ngFor="let item of courseSearchHistory"
+            (click)="execSearchHistoryItem(item)"
+            class="list-group-item list-group-item-action">{{ item }}</li>
+      </ul>
+    </div>
+    
+  </div>
+
+  <div class="col-9 pt-3 ps-5 pb-5">
+    <div class="col-12 fw-bold d-flex justify-content-between mb-3">
+      <p>Cursos disponibles<span *ngIf="searchTerm.length > 0"> para la búsqueda "{{ searchTerm }}"</span></p>
+      <p><span class="text-danger">{{ (total === -1) ?  0 : total}}</span> {{ (total === 1) ? 'curso' : 'cursos' }}</p>
+    </div>
+
+    <div *ngIf="total === -1"
+         class="position-relative spinner-container">
+      <ngx-spinner [fullScreen]="false" color="#e95420" type="ball-beat" size="medium">
+      </ngx-spinner>
+    </div>
+
+    <div *ngIf="total > 0">
+      <div class="col-12">
+    
+        <div *ngFor="let course of coursesToShow">
+          <app-course-search-item [routerLink]="['/cursos/detalle', course._id]"
+                                  [course]="course">
+          </app-course-search-item>
+        </div>
+    
+      </div>
+    
+      <div *ngIf="total > pageSize"
+           class="col-12 d-flex justify-content-center py-5">
+        <button *ngIf="showPreviousPageBtn()"
+                (click)="previousPage()"
+                class="btn btn-outline-primary me-2">
+          <fa-icon [icon]="faChevronLeft" class="me-1"></fa-icon>
+          Página anterior
+        </button>
+        <button *ngIf="showNextPageBtn()"
+                (click)="nextPage()"
+                class="btn btn-outline-primary ms-2">
+          Página siguiente
+          <fa-icon [icon]="faChevronRight" class="ms-1"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="total === 0">
+      <div class="d-flex justify-content-center text-danger mt-5 fw-bold">
+        <p>No se encontraron cursos.</p>
+      </div>
+    </div>
+  </div>
+</div>

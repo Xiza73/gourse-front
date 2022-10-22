@@ -1,0 +1,30 @@
+.card-text {
+    font-size: .9rem;
+    height: 80px;
+    margin-top: 1rem
+  }
+  
+  .card-title {
+    height: 50px
+  }
+  
+  .institution-container {
+    cursor: pointer;
+  }
+  
+  .card-img-top {
+    height: 150px;
+    width: 230px;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .img-default {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }

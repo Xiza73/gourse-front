@@ -1,0 +1,28 @@
+<div class="d-flex pb-2 justify-content-between">
+  <h5 class="d-flex justify-content-center align-items-center mb-0">
+    {{ title }}
+  </h5>
+  <button mat-icon-button mat-dialog-close type="button">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-divider></mat-divider>
+<div class="row mt-4">
+  <div class="col-12">
+    <p>{{ message }}</p>
+  </div>
+
+  <div class="col-12 d-flex justify-content-end mt-3">
+    <button mat-raised-button color="basic" 
+            cdkFocusInitial mat-dialog-close class="me-3" 
+            type="button">
+      Cancelar
+    </button>
+    <button mat-raised-button color="primary" 
+            type="button"
+            (click)="confirm()">
+      {{ confirmBtnLabel }}
+    </button>
+  </div>
+
+</div>

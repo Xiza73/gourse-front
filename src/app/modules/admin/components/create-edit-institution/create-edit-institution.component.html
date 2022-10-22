@@ -1,0 +1,74 @@
+<form [formGroup]="form" (submit)="save()">
+  <div class="d-flex pb-2 justify-content-between">
+    <h5 class="d-flex justify-content-center align-items-center mb-0">
+      {{ mode === 'create' ? 'Agregar institución' : 'Editar institución' }}
+    </h5>
+    <button mat-icon-button mat-dialog-close type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <!--Name-->
+    <mat-form-field appearance="outline" class="col-12">
+      <mat-label>Nombre</mat-label>
+      <input matInput 
+             placeholder="Institución ABC" 
+             formControlName="name" 
+             required>
+      <mat-icon matSuffix class="material-icons-two-tone">perm_identity</mat-icon>
+      <mat-error *ngIf="isRequiredField('name')">Nombre y apellidos requeridos</mat-error>
+    </mat-form-field>
+  
+    <!--Description-->
+    <mat-form-field appearance="outline" class="col-12 mt-2">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput #descInput
+                placeholder="Somos una institución..."
+                formControlName="description"
+                [rows]="5"
+                required>
+      </textarea>
+      <mat-error *ngIf="isRequiredField('description')">Descripción requerida</mat-error>
+    </mat-form-field>
+  
+    <!--URL-->
+    <mat-form-field appearance="outline" class="col-12 mt-2">
+      <mat-label>Página</mat-label>
+      <input matInput 
+             placeholder="https://institucion.pe" 
+             formControlName="url"  
+             required>
+      <mat-icon matSuffix class="material-icons-two-tone">language</mat-icon>
+      <mat-error *ngIf="isRequiredField('url')">URL requerida</mat-error>
+    </mat-form-field>
+  
+    <!--Email-->
+    <mat-form-field appearance="outline" class="col-12 mt-2">
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput 
+             placeholder="institucion@example.com" 
+             formControlName="email"  
+             required>
+      <mat-icon matSuffix class="material-icons-two-tone">markunread</mat-icon>
+      <mat-error *ngIf="isRequiredField('email')">Correo electrónico requerido</mat-error>
+      <mat-error *ngIf="isValidEmail('email')">No es un correo válido</mat-error>
+    </mat-form-field>
+  
+    <!--Status-->
+    <mat-form-field appearance="outline" class="col-12 mt-2">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status">
+        <mat-option [value]="1">Activo</mat-option>
+        <mat-option [value]="0">Inactivo</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isRequiredField('status')">Estado requerido</mat-error>
+    </mat-form-field>
+  
+    <div class="col-12 d-flex justify-content-end mt-3">
+      <button mat-raised-button color="basic" mat-dialog-close class="me-3" type="button">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit">Guardar institución</button>
+    </div>
+  
+  </div>
+</form>

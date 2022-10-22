@@ -1,0 +1,22 @@
+mat-nav-list {
+  a {
+    color: #a1a2b6;
+    mat-icon {
+      margin-right: 15px;
+      color: #494b74;
+    }
+    span {
+      font-size: 11pt;
+    }
+  }
+  a:hover, .list-item-active {
+    background: #141924;
+    color: white;
+    mat-icon {
+      color: var(--bs-primary)
+    }
+  }
+  .logo {
+    cursor: pointer;
+  }
+}

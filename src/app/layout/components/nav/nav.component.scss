@@ -1,0 +1,19 @@
+@import './../../../app.component.scss';
+
+.avatar {
+  width: 32px;
+  height: 32px;
+}
+
+header {
+  background-color: $bg-light;
+}
+
+.badge-premium{
+  background-color: #e95420;
+  border-radius: 12px;
+  font-size: 9px;
+  padding: 2px 8px;
+  color: #ffffff;
+  margin-left: 12px;
+}
