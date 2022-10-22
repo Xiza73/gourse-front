@@ -44,7 +44,6 @@ export class ClientService {
   }
 
   public updateUserProfile(id: string, body: any): Observable<any> {
-    console.log(body);
     return this.httpClient.put<any>(this.apiUrl + `/client/profile/${id}`, body, { observe: "body" });
   }
 }

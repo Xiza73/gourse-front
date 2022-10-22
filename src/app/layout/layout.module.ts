@@ -9,18 +9,21 @@ import { AdminHeaderComponent } from './components/admin-header/admin-header.com
 import { AdminFooterComponent } from './components/admin-footer/admin-footer.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { RouterModule } from '@angular/router';
-
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+//import { CheckOutModule } from '../modules/checkout-page/checkout-page.module';
 
 const layouts = [
   AdminLayoutComponent,
   AuthLayoutComponent,
-  ContentLayoutComponent
+  ContentLayoutComponent,
+  
 ];
 
 @NgModule({
@@ -30,6 +33,7 @@ const layouts = [
     AdminFooterComponent,
     FooterComponent,
     NavComponent,
+    
     ...layouts
   ],
   imports: [
@@ -40,7 +44,10 @@ const layouts = [
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+  //  CheckOutModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     ...layouts

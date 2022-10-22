@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit,ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
 import {MatSort} from '@angular/material/sort';
 import { User } from 'src/app/data/types/user';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
@@ -9,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { InstitutionService } from 'src/app/data/services/institution.service';
 import { CreateEditInstitutionComponent } from '../../components/create-edit-institution/create-edit-institution.component';
 import { Institution } from 'src/app/data/types/institution';
+import { MatFormFieldModule } from '@angular/material/form-field/form-field-module';
 
 @Component({
   selector: 'app-institutions',

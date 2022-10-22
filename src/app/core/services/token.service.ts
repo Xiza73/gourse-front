@@ -3,11 +3,10 @@ import { Injectable } from '@angular/core';
 const TOKEN = 'ACCESS_TOKEN';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenService {
-
-  constructor() { }
+  constructor() {}
 
   public setToken(token: string): void {
     localStorage.setItem(TOKEN, token);
@@ -56,7 +55,7 @@ export class TokenService {
     if (!token) {
       return null;
     }
-    
+
     const values = this._getTokenPayloadDecoded(token);
     return values.role;
   }
@@ -77,5 +76,4 @@ export class TokenService {
     const payloadDecoded = atob(payload);
     return JSON.parse(payloadDecoded);
   }
-
 }

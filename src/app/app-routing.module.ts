@@ -5,11 +5,12 @@ import { UserRoleGuard } from './core/guards/user-role.guard';
 import { AdminLayoutComponent } from './layout/layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layout/layouts/auth-layout/auth-layout.component';
 import { ContentLayoutComponent } from './layout/layouts/content-layout/content-layout.component';
+import { HomeComponent } from './modules/home/pages/home/home.component';
 
 const routes: Routes = [
   {
     path: '',
-    canActivate: [ UserRoleGuard ], 
+    canActivate: [ UserRoleGuard ],
     component: ContentLayoutComponent,
     children: [
       {
@@ -28,7 +29,11 @@ const routes: Routes = [
       {
         path: 'instituciones',
         loadChildren: () => import('./modules/institution/institution.module').then(m => m.InstitutionModule)
-      }
+      },
+        {
+          path: 'checkout',
+          loadChildren: () => import('./modules/checkout-page/checkout-page.module').then(m => m.CheckOutModule)
+        }
     ]
   },
   {
@@ -46,7 +51,11 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: ''
-  }
+  },
+  {
+    path: '',
+    component: HomeComponent
+  },
 ];
 
 @NgModule({

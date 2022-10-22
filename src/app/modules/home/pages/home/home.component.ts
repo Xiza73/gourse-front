@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('apiUrl', environment.apiUrl);
     this.spinner.show();
     this.courseService.readCourses('', 'start', '-1')
       .subscribe(

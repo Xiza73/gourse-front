@@ -2,7 +2,7 @@
   <div class="row course-data">
     <div class="col-4">
       <div class="course-img-container">
-        <img [src]="course.image ? course.image : './assets/images/course.jpg'" alt=""
+        <img [src]="course.image ? course.image : './assets/images/course.png'" alt=""
           [class.course-img-default]="!course.image">
       </div>
     </div>
@@ -40,16 +40,4 @@
       </p>
     </div>
   </div>
-
-  <!-- <div class="row recommended-courses">
-    <div class="col-12">
-      <h1>Otros cursos que te pueden interesar</h1>
-      <div class="d-flex justify-content-between align-items-center flex-wrap pt-4">
-        <div *ngFor="let item of courses">
-          <app-course-box [course]="item">
-          </app-course-box>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </div>

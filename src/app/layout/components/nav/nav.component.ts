@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 import { DataSharingService } from 'src/app/core/services/data-sharing.service';
 import { TokenService } from 'src/app/core/services/token.service';
+import { ClientService } from 'src/app/data/services/client.service';
 
 @Component({
   selector: 'app-nav',
@@ -15,12 +17,15 @@ export class NavComponent implements OnInit {
 
   isLogged: boolean = false;
   username: string = '';
+  isPremium = false;
 
   constructor(
     private tokenService: TokenService,
     private router: Router,
-    private dataSharingService: DataSharingService
-  ) { }
+    private dataSharingService: DataSharingService,
+    private readonly toastr: ToastrService,
+    private readonly clientService: ClientService,
+    ) { }
 
   ngOnInit(): void {
     this.isLogged = this.tokenService.isValidToken();
@@ -33,6 +38,21 @@ export class NavComponent implements OnInit {
     this.dataSharingService.username.subscribe(
       value => {
         this.username = value;
+        this.loadPremium();
+      }
+    );
+
+    this.loadPremium();
+  }
+
+  loadPremium(){
+    this.clientService.getUserProfile(this.tokenService.getIdFromToken()!).subscribe(
+      (res) => {
+        const { isPremium } = res.body.data;
+        this.isPremium = isPremium;
+      },
+      (err) => {
+        this.toastr.error(err.error.message, 'Error');
       }
     );
   }
@@ -46,4 +66,13 @@ export class NavComponent implements OnInit {
     this.router.navigate(['/login'])
   }
 
+  goToPremium(){
+    if(!this.isLogged){
+      this.toastr.show('Primero debes iniciar sesión');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.router.navigate(['/checkout/pag']);
+  }
 }
