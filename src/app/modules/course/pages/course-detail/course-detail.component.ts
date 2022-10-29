@@ -1,6 +1,10 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHeart,
+  faCheck,
+  faCheckCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { CourseService } from 'src/app/data/services/course.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { InstitutionService } from 'src/app/data/services/institution.service';
@@ -10,16 +14,17 @@ import { Client } from 'src/app/data/types/client';
 import { TokenService } from 'src/app/core/services/token.service';
 import { of } from 'rxjs';
 
-
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
-  styleUrls: ['./course-detail.component.scss']
+  styleUrls: ['./course-detail.component.scss'],
 })
 export class CourseDetailComponent implements OnInit {
   // Icons
   faHeart = faHeart;
-  active = false;
+  faCheck = faCheckCircle;
+  activeHeart = false;
+  activeCheck = false;
 
   courseId: string = '';
   course: any = {};
@@ -34,17 +39,20 @@ export class CourseDetailComponent implements OnInit {
     private tokenService: TokenService,
     private toastr: ToastrService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const userId = this.tokenService.getClientIdFromToken();
 
     this.courseId = this.route.snapshot.params['id'];
-    this.courseService.readCourse(this.courseId)
+    this.courseService
+      .readCourse(this.courseId)
       .pipe(
-        tap(response => this.course = response.data),
-        switchMap(response => this.institutionService.readInsitution(response.data.institution)),
-        tap(response => this.institution = response.data),
+        tap((response) => (this.course = response.data)),
+        switchMap((response) =>
+          this.institutionService.readInsitution(response.data.institution)
+        ),
+        tap((response) => (this.institution = response.data)),
         switchMap(() => {
           if (!userId) {
             return of('unauthenticated');
@@ -53,17 +61,22 @@ export class CourseDetailComponent implements OnInit {
         })
       )
       .subscribe(
-        response => {
+        (response) => {
           if (response !== 'unauthenticated') {
             this.user = response.data;
-            this.user.favorites?.forEach(courseUrl => {
+            this.user.favorites?.forEach((courseUrl) => {
               if (courseUrl === this.course.url) {
-                this.active = true;
+                this.activeHeart = true;
+              }
+            });
+            this.user.complete?.forEach((courseUrl) => {
+              if (courseUrl === this.course.url) {
+                this.activeCheck = true;
               }
             });
           }
         },
-        err => {
+        (err) => {
           this.toastr.error(err.error.message, 'Error');
           this.router.navigate(['/cursos/busqueda']);
         }
@@ -76,25 +89,66 @@ export class CourseDetailComponent implements OnInit {
       return;
     }
 
-    this.active = !this.active
+    this.activeHeart = !this.activeHeart;
 
-    if (this.active) {
-      this.clientService.addFavorite(this.user._id!, this.course.url).subscribe(
-        response => {
+    if (this.activeHeart) {
+      this.clientService
+        .addFavorite(this.user._id!, this.course.url)
+        .subscribe((response) => {
           if (response.statusCode === 200) {
             this.toastr.success('Curso agregado a favoritos', 'Favoritos');
           }
-        }
-      );
+        });
     } else {
-      this.clientService.removeFavorite(this.user._id!, this.course.url).subscribe(
-        response => {
+      this.clientService
+        .removeFavorite(this.user._id!, this.course.url)
+        .subscribe((response) => {
           if (response.statusCode === 200) {
             this.toastr.success('Curso eliminado de favoritos', 'Favoritos');
           }
-        }
-      );
+        });
     }
   }
 
+  public addDeleteCheck(): void {
+    if (!this.tokenService.isLogged()) {
+      this.toastr.info(
+        'Inicia sesión para usar completar el curso',
+        'Completar'
+      );
+      return;
+    }
+
+    this.activeCheck = !this.activeCheck;
+
+    if (this.activeCheck) {
+      this.clientService
+        .addCompleted(this.user._id!, this.course.url)
+        .subscribe(
+          (response) => {
+            if (response.statusCode === 200) {
+              this.toastr.success(
+                'Curso marcado como completado',
+                'Completado'
+              );
+            }
+          },
+          (err) => {
+            this.toastr.error(err.error.message, 'Error');
+            this.activeCheck = false;
+          }
+        );
+    } else {
+      this.clientService
+        .removeCompleted(this.user._id!, this.course.url)
+        .subscribe((response) => {
+          if (response.statusCode === 200) {
+            this.toastr.success(
+              'Curso desmarcado como completado',
+              'Completado'
+            );
+          }
+        });
+    }
+  }
 }

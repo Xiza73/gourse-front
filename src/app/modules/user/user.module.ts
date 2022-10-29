@@ -6,13 +6,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CompleteComponent } from './pages/complete/complete.component';
 
 
 
 @NgModule({
   declarations: [
     ProfileComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    CompleteComponent
   ],
   imports: [
     CommonModule,

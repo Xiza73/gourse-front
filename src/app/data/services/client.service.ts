@@ -35,6 +35,20 @@ export class ClientService {
     return this.httpClient.get(this.apiUrl + `/client/favorites/${clientId}`);
   }
 
+  public addCompleted (clientId: string, courseUrl: string): Observable<any> {
+    const payload = { clientId, courseUrl };
+    return this.httpClient.post(this.apiUrl + '/client/completed/add', payload);
+  }
+
+  public removeCompleted (clientId: string, courseUrl: string): Observable<any> {
+    const payload = { clientId, courseUrl };
+    return this.httpClient.post(this.apiUrl + '/client/completed/remove', payload);
+  }
+
+  public readCompleteCourses(clientId: string): Observable<any> {
+    return this.httpClient.get(this.apiUrl + `/client/completed/${clientId}`);
+  }
+
   public getUserProfile(id: string): Observable<any> {
     let params: HttpParams = new HttpParams();
     if (id) {

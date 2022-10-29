@@ -7,7 +7,13 @@
       </div>
     </div>
     <div class="col-8">
-      <h1 class="mb-4">{{ course.name }}</h1>
+      <h1 class="mb-4 d-flex gap-3">
+        {{ course.name }}
+        <fa-icon [icon]="faCheck" [className]="activeCheck ? 'icon active_icon' : 'icon innactive_icon'"
+          data-bs-toggle="tooltip" title="Marcar como completado" title="Marcar como completado"
+          (click)="addDeleteCheck()">
+        </fa-icon>
+      </h1>
       <p class="mb-3"><b>Brindado por: </b><a [routerLink]="['/instituciones/detalle', institution._id]">{{
           institution.name }}</a></p>
       <p class="mb-3"><b>Fecha de Inicio: </b>{{ course.start }}</p>
@@ -16,7 +22,7 @@
       <p class="mb-3 price"><b>Precio: </b>{{ course.price | currency }}</p>
       <div class="mt-5">
         <div class="buy">
-          <fa-icon [icon]="faHeart" [className]="active ? 'icon active_heart' : 'icon heart'"
+          <fa-icon [icon]="faHeart" [className]="activeHeart ? 'icon active_icon' : 'icon innactive_icon'"
             (click)="addDeleteFavorite()">
           </fa-icon>
           <p (click)="addDeleteFavorite()">Añadir a favoritos</p>

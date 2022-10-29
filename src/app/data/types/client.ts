@@ -3,4 +3,5 @@ export interface Client {
   aboutMe  ?: string;
   email    ?: string;
   favorites?: string[];
+  complete ?: string[];
 }
