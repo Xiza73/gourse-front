@@ -3,7 +3,7 @@
     <div class="container-fluid px-2">
 
       <a class="navbar-brand text-dark" routerLink="/">
-        <h1 class="fw-bold">Gourse</h1>
+        <h1 class="fw-bold m-0">Gourse</h1>
       </a>
 
       <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -38,8 +38,8 @@
               aria-disabled="true">Instituciones</a>
           </li>
           <li class="nav-item" *ngIf="!isPremium">
-            <a class="nav-link link-dark" routerLink="/checkout/pag" tabindex="-1"
-              aria-disabled="true" (click)="goToPremium()"><b>Vuélvete Premium</b></a>
+            <a class="nav-link link-dark" routerLink="/checkout/pag" tabindex="-1" aria-disabled="true"
+              (click)="goToPremium()"><b>Vuélvete Premium</b></a>
           </li>
         </ul>
 
@@ -66,6 +66,7 @@
               </li>
               <li><a class="dropdown-item" (click)="goToProfile()">Mi perfil</a></li>
               <li><a class="dropdown-item" [routerLink]="['/usuario/favoritos']">Favoritos</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/usuario/completados']">Completados</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>

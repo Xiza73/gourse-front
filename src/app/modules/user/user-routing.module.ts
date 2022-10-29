@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { CompleteComponent } from './pages/complete/complete.component';
 
 const routes: Routes = [
   {
@@ -9,18 +10,22 @@ const routes: Routes = [
     children: [
       {
         path: 'perfil',
-        component: ProfileComponent
+        component: ProfileComponent,
       },
       {
         path: 'favoritos',
-        component: FavoritesComponent
-      }
-    ]
-  }
+        component: FavoritesComponent,
+      },
+      {
+        path: 'completados',
+        component: CompleteComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class UserRoutingModule { }
+export class UserRoutingModule {}
