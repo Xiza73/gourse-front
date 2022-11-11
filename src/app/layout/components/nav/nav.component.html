@@ -19,7 +19,7 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2">
           <li class="nav-item dropdown d-none">
             <a class="nav-link link-dark dropdown-toggle" href="#" id="navbarDropdown" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">
@@ -44,6 +44,11 @@
         </ul>
 
         <ul class="navbar-nav">
+          <li>
+            <mat-icon matTooltip="Envianos sugerencias" class="text-dark w-100" style="cursor: pointer;"
+              (click)="openFeedbackMessage()">message
+            </mat-icon>
+          </li>
           <li>
             <button class="btn btn-primary" routerLink="/login" *ngIf="!isLogged">
               Iniciar sesión
