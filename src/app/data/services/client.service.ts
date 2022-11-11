@@ -4,14 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClientService {
   private apiUrl: string = environment.apiUrl;
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
+  constructor(private httpClient: HttpClient) {}
 
   public readClient(clientId: string): Observable<any> {
     return this.httpClient.get(this.apiUrl + `/client/${clientId}`);
@@ -28,7 +26,10 @@ export class ClientService {
 
   public removeFavorite(clientId: string, courseUrl: string): Observable<any> {
     const payload = { clientId, courseUrl };
-    return this.httpClient.post(this.apiUrl + '/client/favorites/remove', payload);
+    return this.httpClient.post(
+      this.apiUrl + '/client/favorites/remove',
+      payload
+    );
   }
 
   public readFavorites(clientId: string): Observable<any> {
@@ -54,10 +55,23 @@ export class ClientService {
     if (id) {
       params = params.append('id', id);
     }
-    return this.httpClient.get<any>(this.apiUrl + '/client/profile/id', { observe: "response", params });
+    return this.httpClient.get<any>(this.apiUrl + '/client/profile/id', {
+      observe: 'response',
+      params,
+    });
   }
 
   public updateUserProfile(id: string, body: any): Observable<any> {
-    return this.httpClient.put<any>(this.apiUrl + `/client/profile/${id}`, body, { observe: "body" });
+    return this.httpClient.put<any>(
+      this.apiUrl + `/client/profile/${id}`,
+      body,
+      { observe: 'body' }
+    );
+  }
+
+  public sendFeedbackMessage(body: any): Observable<any> {
+    return this.httpClient.post<any>(this.apiUrl + `/client/feedback`, body, {
+      observe: 'body',
+    });
   }
 }

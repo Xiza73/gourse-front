@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Déjanos un Comentario!</h1>
+<div mat-dialog-content class="d-flex flex-column justify-content-center align-items-center">
+  <mat-form-field appearance="fill" style="width: 90%;">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 90%;">
+    <mat-label>Correo</mat-label>
+    <input matInput [(ngModel)]="data.email">
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="width: 90%;">
+    <mat-label>Mensaje</mat-label>
+    <textarea matInput [(ngModel)]="data.message"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="d-flex gap-4 justify-content-center align-items-center">
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button cdkFocusInitial (click)="sendMessage()">Enviar</button>
+</div>

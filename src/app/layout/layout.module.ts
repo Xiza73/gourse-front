@@ -17,13 +17,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FeedbackModalComponent } from './components/nav/feedback-modal/feedback-modal.component';
 //import { CheckOutModule } from '../modules/checkout-page/checkout-page.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 
 const layouts = [
   AdminLayoutComponent,
   AuthLayoutComponent,
   ContentLayoutComponent,
-  
 ];
 
 @NgModule({
@@ -33,8 +38,9 @@ const layouts = [
     AdminFooterComponent,
     FooterComponent,
     NavComponent,
-    
-    ...layouts
+
+    ...layouts,
+    FeedbackModalComponent,
   ],
   imports: [
     CommonModule,
@@ -44,13 +50,16 @@ const layouts = [
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatTooltipModule,
+    MatInputModule,
     MatMenuModule,
-  //  CheckOutModule,
+    FontAwesomeModule,
+    //  CheckOutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  exports: [
-    ...layouts
-  ]
+  exports: [...layouts],
 })
-export class LayoutModule { }
+export class LayoutModule {}
