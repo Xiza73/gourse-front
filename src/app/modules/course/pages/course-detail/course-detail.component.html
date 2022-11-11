@@ -35,6 +35,7 @@
     </div>
   </div>
 
+  <!-- Course Description -->
   <div class="row course-description">
     <div class="col-12">
       <h1>Descripción</h1>
@@ -46,4 +47,36 @@
       </p>
     </div>
   </div>
-</div>
+
+  <!-- Course Comments -->
+  <div class="row course-comments">
+    <div class="col-12">
+      <h1>Comentarios</h1>
+      <div class="new-comment">
+        <div class="comment-input">
+          <img src="./assets/images/user.png" alt="">
+          <textarea name="comment" id="comment" rows="4" placeholder="Escribe un comentario..."
+            [(ngModel)]="newComment"></textarea>
+        </div>
+        <div class="comment-btn">
+          <button class="btn btn-warning" (click)="addComment()">Comentar</button>
+        </div>
+      </div>
+      <div class="comments">
+        <div class="comment" *ngFor="let comment of comments">
+          <div class="comment-data">
+            <img src="./assets/images/user.png" alt="">
+            <div class="comment-info">
+              <div class="comment-header">
+                <p class="comment-user">{{ comment.user.username }}</p>
+                <p class="comment-date">{{ comment.createdAt | date: 'dd/MM/yyyy' }}</p>
+              </div>
+              <div class="comment-text">
+                <p>{{ comment.content }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
