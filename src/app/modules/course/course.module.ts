@@ -7,9 +7,8 @@ import { CourseSearchComponent } from './pages/course-search/course-search.compo
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CourseSearchItemComponent } from './components/course-search-item/course-search-item.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
 
 @NgModule({
   declarations: [
@@ -22,6 +21,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CourseRoutingModule,
     FontAwesomeModule,
     SharedModule,
+    FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule
   ]

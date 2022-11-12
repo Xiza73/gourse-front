@@ -13,6 +13,7 @@ import { ClientService } from 'src/app/data/services/client.service';
 import { Client } from 'src/app/data/types/client';
 import { TokenService } from 'src/app/core/services/token.service';
 import { of } from 'rxjs';
+import { CommentService } from '../../../../data/services/comment.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -31,11 +32,15 @@ export class CourseDetailComponent implements OnInit {
   institution: any = {};
   user: Client = {};
 
+  newComment: string = '';
+  comments: any[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
     private institutionService: InstitutionService,
     private clientService: ClientService,
+    private commentService: CommentService,
     private tokenService: TokenService,
     private toastr: ToastrService,
     private router: Router
@@ -81,6 +86,8 @@ export class CourseDetailComponent implements OnInit {
           this.router.navigate(['/cursos/busqueda']);
         }
       );
+
+    this.getComments();
   }
 
   public addDeleteFavorite(): void {
@@ -150,5 +157,44 @@ export class CourseDetailComponent implements OnInit {
           }
         });
     }
+  }
+
+  public getComments(): void {
+    this.commentService.getComments(this.courseId).subscribe(
+      (response) => {
+        this.comments = response.data;
+        if (this.comments.length === 0) {
+          this.toastr.info('No hay comentarios para este curso', 'Comentarios');
+        }
+      },
+      (err) => {
+        this.toastr.error(err.error.message, 'Error');
+      }
+    );
+  }
+
+  addComment(): void {
+    if (!this.tokenService.isLogged()) {
+      this.toastr.info('Inicia sesión para comentar', 'Comentar');
+      return;
+    }
+
+    if (this.newComment === '') {
+      this.toastr.info('Debes escribir un comentario', 'Comentar');
+      return;
+    }
+
+    this.commentService
+      .addComment({
+        comment: this.newComment,
+        idEntity: this.courseId,
+        idUser: this.tokenService.getIdFromToken()!,
+      })
+      .subscribe((response) => {
+        if (response.statusCode === 200) {
+          this.newComment = '';
+          this.getComments();
+        }
+      });
   }
 }
