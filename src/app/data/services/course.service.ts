@@ -4,23 +4,25 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseService {
   private apiUrl: string = environment.apiUrl;
   private courses: any[] = [];
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
+  constructor(private httpClient: HttpClient) {}
 
-  public readCourses(name: string, field: string, sort: string): Observable<any> {
+  public readCourses(
+    name: string,
+    field: string,
+    sort: string
+  ): Observable<any> {
     const params = new HttpParams()
       .set('name', name)
       .set('field', field)
       .set('sort', sort);
 
-    return this.httpClient.get(this.apiUrl + '/course', {params});
+    return this.httpClient.get(this.apiUrl + '/course', { params });
   }
 
   public readCourse(id: string): Observable<any> {
@@ -28,7 +30,9 @@ export class CourseService {
   }
 
   public readCoursesByInstitutionId(institutionId: string): Observable<any> {
-    return this.httpClient.get(this.apiUrl + `/course/institution/${institutionId}`);
+    return this.httpClient.get(
+      this.apiUrl + `/course/institution/${institutionId}`
+    );
   }
 
   public setCourses(courses: any[]) {
@@ -37,5 +41,23 @@ export class CourseService {
 
   public getCourses(): any[] {
     return this.courses;
+  }
+
+  public getCourseRating(courseId: string): Observable<any> {
+    return this.httpClient.get(this.apiUrl + `/course/score/${courseId}`);
+  }
+
+  public sendScore(
+    idUser: string,
+    idCourse: string,
+    score: number,
+    comment: string
+  ): Observable<any> {
+    return this.httpClient.post(this.apiUrl + `/course/score`, {
+      score,
+      idUser,
+      idCourse,
+      comment,
+    });
   }
 }

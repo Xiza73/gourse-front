@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { ClientService } from 'src/app/data/services/client.service';
+import { CourseService } from '../../../../../data/services/course.service';
 
 @Component({
   selector: 'app-feedback-modal',
@@ -12,7 +12,7 @@ export class FeedbackModalComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<FeedbackModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private readonly clientService: ClientService,
+    private readonly courseService: CourseService,
     private readonly toastr: ToastrService
   ) {}
 
@@ -21,18 +21,24 @@ export class FeedbackModalComponent implements OnInit {
   }
 
   sendMessage(): void {
-    this.clientService.sendFeedbackMessage(this.data).subscribe(
-      (response) => {
-        this.toastr.success(response.message);
-      },
-      (error) => {
-        this.toastr.error(error.error.message);
-      },
-      () => {
-        this.dialogRef.close();
-      }
-    );
-    console.log('no fin');
+    this.courseService
+      .sendScore(
+        this.data.idUser,
+        this.data.idCourse,
+        this.data.score,
+        this.data.comment
+      )
+      .subscribe(
+        (response) => {
+          this.toastr.success(response.message);
+        },
+        (error) => {
+          this.toastr.error(error.error.message);
+        },
+        () => {
+          this.dialogRef.close();
+        }
+      );
   }
 
   ngOnInit(): void {}
