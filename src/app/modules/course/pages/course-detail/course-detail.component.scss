@@ -28,6 +28,18 @@ $img-width: 360px;
   color: yellowgreen;
 }
 
+.star_icon {
+  font-size: 1rem;
+}
+
+.share_icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  &:hover {
+    color: rgb(144, 185, 60);
+  }
+}
+
 .course-container {
   .course-data {
     h1 {
@@ -122,7 +134,7 @@ $img-width: 360px;
         .comment-data {
           display: flex;
           align-items: flex-start;
-          justify-content: start;
+          justify-content: flex-start;
           border-bottom: 1px solid #e95420;
           padding: 1rem;
           margin-bottom: 0.5rem;
@@ -156,7 +168,7 @@ $img-width: 360px;
         }
       }
     }
-    margin-top: 100px;
+    margin-top: 70px;
     h1 {
       font-size: 2rem;
     }
@@ -172,4 +184,73 @@ $img-width: 360px;
       font-size: 2rem;
     }
   }
+}
+
+.ratings_container {
+  margin-top: 30px;
+  h1 {
+    font-size: 2rem;
+    line-height: 2.3rem;
+  }
+  p {
+    font-size: 1rem;
+    padding-left: 1rem;
+  }
+  .cards_rating_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2.2rem;
+    margin-top: 0.5rem;
+    .card_rating {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.3rem;
+      border: 1px solid #73ff3c;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      background-color: rgb(228, 255, 228);
+      padding: 1rem;
+      .card_rating_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: 1.1rem;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+        .card_rating_user {
+          display: flex;
+          gap: 0.5rem;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          .card_rating_user_name {
+            font-size: 1.2rem;
+            font-weight: bold;
+          }
+          .card_rating_user_stars {
+            display: flex;
+            gap: 0.4rem;
+          }
+        }
+      }
+      .card_rating_comment {
+        margin-bottom: 0.8rem;
+        font-size: 1rem;
+        text-align: start;
+        align-self: flex-start;
+      }
+    }
+  }
+}
+
+::ng-deep .mat-tooltip {
+  font-size: 0.8rem !important;
 }

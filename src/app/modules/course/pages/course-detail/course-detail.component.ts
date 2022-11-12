@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   faHeart,
-  faCheck,
+  faStar,
   faCheckCircle,
+  faShareSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { CourseService } from 'src/app/data/services/course.service';
 import { switchMap, tap } from 'rxjs/operators';
@@ -14,6 +15,8 @@ import { Client } from 'src/app/data/types/client';
 import { TokenService } from 'src/app/core/services/token.service';
 import { of } from 'rxjs';
 import { CommentService } from '../../../../data/services/comment.service';
+import { MatDialog } from '@angular/material/dialog';
+import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
 
 @Component({
   selector: 'app-course-detail',
@@ -24,6 +27,8 @@ export class CourseDetailComponent implements OnInit {
   // Icons
   faHeart = faHeart;
   faCheck = faCheckCircle;
+  faStar = faStar;
+  faShare = faShareSquare;
   activeHeart = false;
   activeCheck = false;
 
@@ -34,6 +39,12 @@ export class CourseDetailComponent implements OnInit {
 
   newComment: string = '';
   comments: any[] = [];
+  stars: boolean[] = [];
+  ratings: {
+    user: string;
+    stars: boolean[];
+    comment: string;
+  }[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +54,8 @@ export class CourseDetailComponent implements OnInit {
     private commentService: CommentService,
     private tokenService: TokenService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    public feedbackModal: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -88,6 +100,8 @@ export class CourseDetailComponent implements OnInit {
       );
 
     this.getComments();
+
+    this.getCoursesRating();
   }
 
   public addDeleteFavorite(): void {
@@ -196,5 +210,60 @@ export class CourseDetailComponent implements OnInit {
           this.getComments();
         }
       });
+  }
+
+  public getCoursesRating(): any {
+    this.courseService.getCourseRating(this.courseId).subscribe(
+      (response) => {
+        this.course.rating = response.data.averageScore;
+        // this.ratings = response.data.comments;
+        this.ratings = response.data.comments.map((comment: any) => {
+          const stars = new Array(5).fill(false);
+          for (let i = 0; i < comment.score; i++) {
+            stars[i] = true;
+          }
+
+          return {
+            user: comment.user,
+            stars,
+            comment: comment.comment,
+          };
+        });
+
+        this.stars = new Array(5).fill(false);
+        for (let i = 0; i < this.course.rating; i++) {
+          this.stars[i] = true;
+        }
+      },
+      (err) => {
+        this.toastr.error(err.error.message, 'Error');
+      }
+    );
+  }
+
+  // return number string with 1 decimal
+  public getRating(): string {
+    return this.course?.rating?.toFixed(1);
+  }
+
+  public openRatingModal(): void {
+    if (!this.tokenService.isLogged()) {
+      this.toastr.info('Inicia sesión para calificar', 'Calificar');
+      return;
+    }
+
+    const idUser = this.tokenService.getIdFromToken()!;
+
+    const dialogRef = this.feedbackModal.open(FeedbackModalComponent, {
+      width: '450px',
+      data: {
+        idUser,
+        idCourse: this.courseId,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getCoursesRating();
+    });
   }
 }
