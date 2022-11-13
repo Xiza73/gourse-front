@@ -1,19 +1,40 @@
 <h1 mat-dialog-title>Déjanos un Comentario!</h1>
-<div mat-dialog-content class="d-flex flex-column justify-content-center align-items-center">
-  <mat-form-field appearance="fill" style="width: 90%;">
+<div
+  mat-dialog-content
+  class="d-flex flex-column justify-content-center align-items-center"
+>
+  <mat-form-field appearance="fill" style="width: 90%">
     <mat-label>Nombre</mat-label>
-    <input matInput [(ngModel)]="data.name">
+    <input matInput [(ngModel)]="data.name" required [disabled]="isLogged" />
+    <mat-error *ngIf="isRequiredField('name')">
+      Nombre <strong>requerido</strong>
+    </mat-error>
   </mat-form-field>
-  <mat-form-field appearance="fill" style="width: 90%;">
+  <mat-form-field appearance="fill" style="width: 90%">
     <mat-label>Correo</mat-label>
-    <input matInput [(ngModel)]="data.email">
+    <input
+      matInput
+      [(ngModel)]="data.email"
+      required
+      [disabled]="isLogged"
+      pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+    />
+    <mat-error *ngIf="isRequiredField('email') || !isValidEmail()">
+      Correo <strong>inválido</strong>
+    </mat-error>
   </mat-form-field>
-  <mat-form-field appearance="fill" style="width: 90%;">
+  <mat-form-field appearance="fill" style="width: 90%">
     <mat-label>Mensaje</mat-label>
-    <textarea matInput [(ngModel)]="data.message"></textarea>
+    <textarea matInput [(ngModel)]="data.message" required></textarea>
+    <mat-error *ngIf="isRequiredField('message')">
+      Mensaje <strong>requerido</strong>
+    </mat-error>         
   </mat-form-field>
 </div>
-<div mat-dialog-actions class="d-flex gap-4 justify-content-center align-items-center">
+<div
+  mat-dialog-actions
+  class="d-flex gap-4 justify-content-center align-items-center"
+>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button cdkFocusInitial (click)="sendMessage()">Enviar</button>
+  <button mat-button cdkFocusInitial (click)="sendMessage()" [disabled]="!fieldsValidate()">Enviar</button>
 </div>
