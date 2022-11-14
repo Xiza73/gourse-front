@@ -98,7 +98,9 @@
             [(ngModel)]="newComment"></textarea>
         </div>
         <div class="comment-btn">
-          <button class="btn btn-warning" (click)="addComment()">Enviar</button>
+          <div matTooltip="Vuélvete premium" [matTooltipDisabled]="getPremium()" matTooltipPosition="left">
+            <button class="btn btn-warning" (click)="addComment()" [disabled]="!getPremium()">Enviar</button>
+          </div>
         </div>
       </div>
       <div class="comments">

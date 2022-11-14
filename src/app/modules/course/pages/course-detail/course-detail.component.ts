@@ -46,6 +46,9 @@ export class CourseDetailComponent implements OnInit {
     comment: string;
   }[] = [];
 
+  isLogged: boolean = false;
+  isPremium = false;
+
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
@@ -102,6 +105,8 @@ export class CourseDetailComponent implements OnInit {
     this.getComments();
 
     this.getCoursesRating();
+
+    this.loadPremium();
   }
 
   public addDeleteFavorite(): void {
@@ -266,4 +271,20 @@ export class CourseDetailComponent implements OnInit {
       this.getCoursesRating();
     });
   }
+
+  loadPremium() {
+    this.clientService
+      .getUserProfile(this.tokenService.getIdFromToken()!)
+      .subscribe(
+        (res) => {
+          const { isPremium } = res.body.data;
+          this.isPremium = isPremium;
+        }
+      );
+  }
+
+  getPremium() {
+    return this.isPremium;
+  }
+
 }
