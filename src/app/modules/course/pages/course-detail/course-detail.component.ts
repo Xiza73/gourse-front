@@ -17,6 +17,7 @@ import { of } from 'rxjs';
 import { CommentService } from '../../../../data/services/comment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
+import { EditmodalComponent } from './edit-modal/editmodal.component';
 
 @Component({
   selector: 'app-course-detail',
@@ -29,6 +30,7 @@ export class CourseDetailComponent implements OnInit {
   faCheck = faCheckCircle;
   faStar = faStar;
   faShare = faShareSquare;
+  
   activeHeart = false;
   activeCheck = false;
 
@@ -58,7 +60,8 @@ export class CourseDetailComponent implements OnInit {
     private tokenService: TokenService,
     private toastr: ToastrService,
     private router: Router,
-    public feedbackModal: MatDialog
+    public feedbackModal: MatDialog,
+    public editModal: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -203,6 +206,11 @@ export class CourseDetailComponent implements OnInit {
       return;
     }
 
+    if (!this.isPremium){
+      this.toastr.info('Funcionalidad premium', 'Premium');
+      return;
+    }
+
     this.commentService
       .addComment({
         comment: this.newComment,
@@ -272,7 +280,7 @@ export class CourseDetailComponent implements OnInit {
     });
   }
 
-  loadPremium() {
+  loadPremium(): void{
     this.clientService
       .getUserProfile(this.tokenService.getIdFromToken()!)
       .subscribe(
@@ -283,8 +291,28 @@ export class CourseDetailComponent implements OnInit {
       );
   }
 
-  getPremium() {
-    return this.isPremium;
+  editComment(): void{
+    if (!this.tokenService.isLogged()) {
+      this.toastr.info('Inicia sesión para editar', 'Editar');
+      return;
+    }
+
+    if (!this.isPremium){
+      this.toastr.info('Funcionalidad premium', 'Premium');
+      return;
+    }
+
+    const idUser = this.tokenService.getIdFromToken()!;
+
+    this.editModal.open(EditmodalComponent, {
+      width: '450px',
+      data: {
+        
+      },
+    });
+  }
+
+  deleteComment(): void{
   }
 
 }

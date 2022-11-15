@@ -16,6 +16,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { EditmodalComponent } from './pages/course-detail/edit-modal/editmodal.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
     CourseSearchComponent,
     CourseSearchItemComponent,
     FeedbackModalComponent,
+    EditmodalComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
+    MatIconModule
   ],
 })
 export class CourseModule {}

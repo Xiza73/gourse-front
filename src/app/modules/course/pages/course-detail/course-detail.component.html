@@ -98,9 +98,7 @@
             [(ngModel)]="newComment"></textarea>
         </div>
         <div class="comment-btn">
-          <div matTooltip="Vuélvete premium" [matTooltipDisabled]="getPremium()" matTooltipPosition="left">
-            <button class="btn btn-warning" (click)="addComment()" [disabled]="!getPremium()">Enviar</button>
-          </div>
+          <button class="btn btn-warning" (click)="addComment()">Enviar</button>
         </div>
       </div>
       <div class="comments">
@@ -116,7 +114,15 @@
                 <p>{{ comment.content }}</p>
               </div>
             </div>
-          </div>
+            <div class="comment-edit">
+              <mat-icon class="icon-edit text-dark w-100" style="margin-bottom: 8px;" matTooltip="Editar"
+               matTooltipPosition="right" (click)="editComment()">create
+              </mat-icon>
+              <mat-icon class="icon-edit text-dark w-100" matTooltip="Eliminar"
+               matTooltipPosition="right" (click)="deleteComment()">delete
+              </mat-icon>
+            </div>
+          </div>  
         </div>
       </div>
     </div>
