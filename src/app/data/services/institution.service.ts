@@ -27,7 +27,7 @@ export class InstitutionService {
 
     return this.httpClient.get(this.apiUrl + '/institution/all', {params});
   }
-  
+
   public readInsitution(id: string): Observable<any> {
     return this.httpClient.get(this.apiUrl + `/institution/${id}`);
   }
@@ -42,5 +42,23 @@ export class InstitutionService {
 
   public deleteInstitution(id: string): Observable<any> {
     return this.httpClient.delete(this.apiUrl + `/institution/${id}`);
+  }
+
+  public getInstitutionRating(institutionId: string): Observable<any> {
+    return this.httpClient.get(this.apiUrl + `/institution/score/${institutionId}`);
+  }
+
+  public sendScore(
+    idUser: string,
+    idInstitution: string,
+    score: number,
+    comment: string
+  ): Observable<any> {
+    return this.httpClient.post(this.apiUrl + `/institution/score`, {
+      score,
+      idUser,
+      idInstitution,
+      comment,
+    });
   }
 }

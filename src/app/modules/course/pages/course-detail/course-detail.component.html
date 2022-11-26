@@ -72,15 +72,27 @@
               <div class="card_rating_user_name">
                 {{ rating.user }}
               </div>
+              <div class="card_rating_comment">
+                {{ rating.comment }}
+              </div>
+            </div>
+          </div>
+          <div class="card_rating_body">
+            <div class="card_rating_body_stars">
+              <h1>Puntaje</h1>
+              <div class="number_rating">
+                {{ getRatingCount(rating.stars) }}
+              </div>
               <div class="card_rating_user_stars">
                 <fa-icon *ngFor="let star of rating.stars" [icon]="faStar"
                   [className]="star ? 'star_icon active_icon' : 'star_icon innactive_icon'">
                 </fa-icon>
               </div>
             </div>
-          </div>
-          <div class="card_rating_comment">
-            {{ rating.comment }}
+            <div class="card_rating_body_face">
+              <fa-icon [icon]="getRatingFace(rating.stars)" class="face-icon">
+                ></fa-icon>
+            </div>
           </div>
         </div>
       </div>
@@ -119,3 +131,4 @@
       </div>
     </div>
   </div>
+</div>

@@ -5,6 +5,9 @@ import {
   faStar,
   faCheckCircle,
   faShareSquare,
+  faSmile,
+  faMeh,
+  faFrown,
 } from '@fortawesome/free-solid-svg-icons';
 import { CourseService } from 'src/app/data/services/course.service';
 import { switchMap, tap } from 'rxjs/operators';
@@ -17,6 +20,7 @@ import { of } from 'rxjs';
 import { CommentService } from '../../../../data/services/comment.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-course-detail',
@@ -29,6 +33,10 @@ export class CourseDetailComponent implements OnInit {
   faCheck = faCheckCircle;
   faStar = faStar;
   faShare = faShareSquare;
+  faSmile = faSmile;
+  faMeh = faMeh;
+  faFrown = faFrown;
+
   activeHeart = false;
   activeCheck = false;
 
@@ -241,9 +249,23 @@ export class CourseDetailComponent implements OnInit {
     );
   }
 
-  // return number string with 1 decimal
   public getRating(): string {
     return this.course?.rating?.toFixed(1);
+  }
+
+  public getRatingCount(stars: boolean[]): string {
+    return stars.filter((star) => star).length.toFixed(1);
+  }
+
+  public getRatingFace(stars: boolean[]): IconProp {
+    const rating = stars.filter((star) => star).length;
+    if (rating <= 1) {
+      return faFrown;
+    } else if (rating <= 3) {
+      return faMeh;
+    } else {
+      return faSmile;
+    }
   }
 
   public openRatingModal(): void {

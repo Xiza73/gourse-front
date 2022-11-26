@@ -2,9 +2,8 @@
   <div class="row institution-data">
     <div class="col-2">
       <div class="institution-img-container d-flex justify-content-center align-items-center">
-        <img [src]="institution.logo ? institution.logo : './assets/images/course.jpg'"
-             alt=""
-             [class.institution-img-default]="!institution.logo">
+        <img [src]="institution.logo ? institution.logo : './assets/images/course.jpg'" alt=""
+          [class.institution-img-default]="!institution.logo">
       </div>
     </div>
     <div class="col-10 ps-5">
@@ -16,23 +15,28 @@
       <div class="col-8 contacto">
         <p class="mb-3"><strong>Redes sociales: </strong></p>
         <div *ngIf="institution.social">
-          <a *ngIf="institution.social.facebook"
-             [href]="institution.social.facebook" target="_blank">
+          <a *ngIf="institution.social.facebook" [href]="institution.social.facebook" target="_blank">
             <fa-icon [icon]="faFacebook" id="facebook"></fa-icon>
           </a>
-          <a *ngIf="institution.social.twitter"
-              [href]="institution.social.twitter" target="_blank">
+          <a *ngIf="institution.social.twitter" [href]="institution.social.twitter" target="_blank">
             <fa-icon [icon]="faTwitter" id="twitter"></fa-icon>
           </a>
-          <a *ngIf="institution.social.instagram"
-              [href]="institution.social.instagram" target="_blank">
+          <a *ngIf="institution.social.instagram" [href]="institution.social.instagram" target="_blank">
             <fa-icon [icon]="faInstagram" id="instagram"></fa-icon>
-          </a> 
+          </a>
         </div>
       </div>
 
       <p class="mb-3">
         <strong>Correo: </strong>{{ institution.email ? institution.email : '-' }}
+      </p>
+      <p class="mb-3 d-flex gap-2"><b>Valoración: </b>
+        <span class="d-flex gap-1 text-secondary fw-bolder">
+          {{ getRating() }}
+          <fa-icon *ngFor="let star of stars" [icon]="faStar"
+            [className]="star ? 'star_icon active_icon' : 'star_icon innactive_icon'">
+          </fa-icon>
+        </span>
       </p>
     </div>
 
@@ -42,8 +46,83 @@
         <p>{{ institution.description ? institution.description : 'Sin descripción.' }}</p>
       </div>
 
-      <div *ngIf="courses.length > 0"
-           class="col-12 my-5">
+      <!-- Ratings Comments -->
+      <div class="row ">
+        <div class="col-12 ratings_container">
+          <h1>Valoraciones
+            <fa-icon matTooltip="Valora el curso!" matTooltipPosition="above" [icon]="faShare" class="share_icon"
+              (click)="openRatingModal()">
+            </fa-icon>
+          </h1>
+          <div class="cards_rating_container">
+            <div class="card_rating" *ngFor="let rating of ratings">
+              <div class="card_rating_header">
+                <img src="./assets/images/user.png" alt="">
+                <div class="card_rating_user">
+                  <div class="card_rating_user_name">
+                    {{ rating.user }}
+                  </div>
+                  <div class="card_rating_comment">
+                    {{ rating.comment }}
+                  </div>
+                </div>
+              </div>
+              <div class="card_rating_body">
+                <div class="card_rating_body_stars">
+                  <h1>Puntaje</h1>
+                  <div class="number_rating">
+                    {{ getRatingCount(rating.stars) }}
+                  </div>
+                  <div class="card_rating_user_stars">
+                    <fa-icon *ngFor="let star of rating.stars" [icon]="faStar"
+                      [className]="star ? 'star_icon active_icon' : 'star_icon innactive_icon'">
+                    </fa-icon>
+                  </div>
+                </div>
+                <div class="card_rating_body_face">
+                  <fa-icon [icon]="getRatingFace(rating.stars)" class="face-icon">
+                    ></fa-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Comments -->
+      <div class="row course-comments">
+        <div class="col-12">
+          <h1>Discusión</h1>
+          <div class="new-comment">
+            <div class="comment-input">
+              <img src="./assets/images/user.png" alt="">
+              <textarea name="comment" id="comment" rows="4" placeholder="Escribe un comentario..."
+                [(ngModel)]="newComment"></textarea>
+            </div>
+            <div class="comment-btn">
+              <button class="btn btn-warning" (click)="addComment()">Enviar</button>
+            </div>
+          </div>
+          <div class="comments">
+            <div class="comment" *ngFor="let comment of comments">
+              <div class="comment-data">
+                <img src="./assets/images/user.png" alt="">
+                <div class="comment-info">
+                  <div class="comment-header">
+                    <p class="comment-user">{{ comment.user.username }}</p>
+                    <p class="comment-date">{{ comment.createdAt | date: 'dd/MM/yyyy' }}</p>
+                  </div>
+                  <div class="comment-text">
+                    <p>{{ comment.content }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="courses.length > 0" class="col-12 my-5">
         <h1 class="mb-5">Cursos disponibles:</h1>
         <swiper [config]="config" class="mySwiper">
           <ng-template *ngFor="let course of courses" swiperSlide>
@@ -54,17 +133,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-           
-  
-    
-  
-   

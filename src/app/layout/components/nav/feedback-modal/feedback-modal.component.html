@@ -6,7 +6,14 @@
   </mat-form-field>
   <mat-form-field appearance="fill" style="width: 90%;">
     <mat-label>Correo</mat-label>
-    <input matInput [(ngModel)]="data.email">
+    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+      placeholder="Ex. pat@example.com" [(ngModel)]="data.email">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill" style="width: 90%;">
     <mat-label>Mensaje</mat-label>
@@ -15,5 +22,5 @@
 </div>
 <div mat-dialog-actions class="d-flex gap-4 justify-content-center align-items-center">
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button cdkFocusInitial (click)="sendMessage()">Enviar</button>
+  <button mat-button cdkFocusInitial (click)="sendMessage()" [disabled]="!emailFormControl.valid">Enviar</button>
 </div>
